@@ -1,4 +1,4 @@
-import { ref, inject, provide, computed } from 'vue'
+import { computed, inject, provide, ref } from 'vue'
 
 // Types
 import type { InjectionKey, Ref } from 'vue'
@@ -31,8 +31,8 @@ export function createRtlScope (currentScope: RtlInstance, localeScope: LocaleIn
   return {
     isRtl: computed(() => {
       if (!!options && typeof options.rtl === 'boolean') return options.rtl
-      if (localeScope.locale.value && currentScope.rtl.hasOwnProperty(localeScope.locale.value)) {
-        return currentScope.rtl[localeScope.locale.value]
+      if (localeScope.current.value && currentScope.rtl.hasOwnProperty(localeScope.current.value)) {
+        return currentScope.rtl[localeScope.current.value]
       }
 
       return currentScope.isRtl.value

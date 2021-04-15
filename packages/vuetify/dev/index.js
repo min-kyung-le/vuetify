@@ -14,6 +14,7 @@ import { messages, sv, en, ja, intlMessages } from './messages'
 import { createIntl } from '@formatjs/intl'
 import { intl } from './intl'
 import { useIntl, provideIntl } from 'vue-intl'
+import { createVueI18nAdapter } from 'vuetify/src/locale/adapters'
 
 const i18n = createI18n({
   legacy: false,
@@ -27,37 +28,14 @@ const rtl = {
   en: false,
   ja: true,
 }
-
-const vueI18n = {
-  createRoot: () => i18n.global,
-  getScope: global => useI18n({ legacy: false, useScope: global ? 'global' : 'parent' }),
-  createScope: (props) => {
-    const scope = useI18n({
-      legacy: false,
-      useScope: 'local',
-      messages,
-      locale: props.locale,
-      fallbackLocale: props.fallbackLocale,
-      inheritLocale: !props.locale,
-    })
-
-    watch(() => props.locale, () => {
-      scope.locale.value = props.locale
-    })
-
-    return scope
-  },
-  rtl,
-}
-
 const wrapVueIntl = instance => {
-  const locale = ref(instance.locale)
-  const fallbackLocale = ref(instance.defaultLocale)
+  const current = ref(instance.locale)
+  const fallback = ref(instance.defaultLocale)
   const messages = ref(instance.messages)
 
   return {
-    locale,
-    fallbackLocale,
+    current,
+    fallback,
     messages,
     t: (id, ...params) => instance.formatMessage({ id }),
   }
@@ -85,13 +63,18 @@ const vueIntl = {
 }
 
 const vuetify = createVuetify({
-  locale: {
-    locale: 'en',
-    fallbackLocale: 'en',
-    messages: { sv, en, ja },
+  // locale: {
+  //   current: 'en',
+  //   fallback: 'en',
+  //   messages: { sv, en, ja },
+  //   rtl,
+  // },
+  locale: createVueI18nAdapter({
+    i18n,
+    useI18n,
+    messages,
     rtl,
-  },
-  // locale: vueI18n,
+  }),
   // locale: vueIntl,
   icons: {
     defaultSet: 'mdi',

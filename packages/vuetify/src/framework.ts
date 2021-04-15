@@ -10,7 +10,7 @@ import { aliases, mdi } from '@/iconsets/mdi'
 import type { App, InjectionKey } from 'vue'
 import type { ThemeOptions } from '@/composables/theme'
 import type { IconOptions } from '@/composables/icons'
-import type { LocaleOptions, LocaleAdapter } from '@/composables/locale'
+import type { LocaleAdapter, LocaleOptions } from '@/composables/locale'
 import type { RtlOptions } from '@/composables/rtl'
 
 export interface VuetifyComponentDefaults {
