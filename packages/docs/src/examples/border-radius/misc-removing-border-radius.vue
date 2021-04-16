@@ -6,8 +6,8 @@
       md="3"
     >
       <div
-        class="pa-4 text-center secondary rounded-0"
-        v-text="`.rounded-0`"
+        class="pa-4 text-center secondary rounded-l-0"
+        v-text="`.rounded-l-0`"
       ></div>
     </v-col>
   </v-row>
